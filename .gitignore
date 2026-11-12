@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.python-version
+
+# uv / pip 巢产物
+# 注意：课程要求提交 pyproject.toml + uv.lock（或 requirements.txt），因此锁文件【不】忽略
+# uv.lock 与 requirements.txt 需要入库
+
+# LaTeX 编译产物
+report/*.aux
+report/*.log
+build/
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.xdv
+
+# 编辑器与系统文件
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 运行产物与临时文件
+output/
+output.txt
+*.log
+*.tmp
+运行截图-临时/
