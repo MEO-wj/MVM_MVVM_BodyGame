@@ -1,0 +1,267 @@
+% ============================================================
+% Python 开发实训 · 课程项目技术报告模板
+% 编译：XeLaTeX（中文必须 XeLaTeX）。VS Code: Ctrl+Alt+B 编译，Ctrl+Alt+V 预览
+% 对应课程要求：ISI3003A Python 开发实训 2026 课程项目要求
+% ============================================================
+\documentclass[12pt,a4paper]{ctexart}
+% 中文默认 ctex 自带 fandol 字体；Windows 本地编译想用宋体黑体可改 fontset=windows
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\geometry{left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.6cm}
+\graphicspath{{../figures/}}
+\captionsetup{font=small,labelsep=quad}
+\renewcommand{\arraystretch}{1.15}
+
+% 代码清单样式（报告中原则上不贴大段代码，此样式供"小段关键代码"与附录使用）
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\bfseries,
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=6pt,
+    frame=single,
+    breaklines=true,
+    breakindent=2em,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    tabsize=4,
+    xleftmargin=1.2em,
+}
+
+% 放宽浮动体限制，避免"图在上、表在下、中间空白"的排版
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.7}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{3}
+\setcounter{totalnumber}{4}
+
+% ============================================================
+\begin{document}
+
+% ==================== 封面 ====================
+% TODO: 填写选题名称、小组成员（要求：封面需写清楚选题和小组成员列表）
+\begin{titlepage}
+    \centering
+    \vspace*{1.6cm}
+    \includegraphics[width=4.2cm]{assets/logo.png}\\[1.2cm]
+    {\zihao{2} \textbf{汕头大学}}\\[0.6cm]
+    {\zihao{1} \textbf{Python 开发实训课程项目报告}}\\[2cm]
+    {\zihao{3} 选题：基于 MVP 架构的图像处理工作台}\\[2.4cm]
+
+    \zihao{4}
+    \renewcommand{\arraystretch}{1.8}
+    \begin{tabular}{rl}
+        选题名称： & （待填写） \\
+        小组成员： & 陈子俊（2024612033） \\
+                   & （待填写，2 人小组） \\
+        指导教师： & 陈泰舟 \\
+        课程名称： & ISI3003A\;Python 开发实训 \\
+    \end{tabular}
+
+    \vfill
+    {\zihao{4} 2026 年秋季学期}
+\end{titlepage}
+
+% ==================== 摘要（可选，不计入正文字数时酌情保留） ====================
+\pagestyle{empty}
+\begin{center}
+    {\zihao{3} \textbf{摘\quad 要}}
+\end{center}
+
+% TODO: 200~300 字摘要：做了什么 + 架构怎么设计 + 替换扩展怎么体现 + 结果如何
+本文……（项目概述）。系统采用 MVP（Model-View-Presenter）架构，
+将界面渲染（View）与业务算法（Model）通过 Presenter 与接口契约解耦，
+在不改动核心框架的前提下完成了（前端替换／后端替换）扩展……（一句话结果）。
+
+\vspace{0.5cm}
+\noindent\textbf{关键词：}Python；MVP 架构；前后端解耦；接口契约；可扩展性
+
+\newpage
+\pagestyle{plain}
+\tableofcontents
+\newpage
+
+% ==================== 正文 ====================
+% 注意：课程要求正文约 1000 字，不含代码；各节给出了建议字数配比
+% ---------------------------------------------------------------
+\section{项目介绍}\label{sec:intro}
+% 建议篇幅：约 150~200 字
+% 内容：项目背景与概述、项目目标、功能需求
+
+% TODO
+（背景：为什么做这个项目；概述：一句话说清应用是什么；
+目标：要达成什么效果；功能需求：列举 3~5 条核心功能，
+例如图像加载、滤镜处理、结果保存、操作历史等。）
+
+% ---------------------------------------------------------------
+\section{系统设计}\label{sec:design}
+% 建议篇幅：约 350~450 字（报告重点，占最大篇幅）
+% 内容：系统架构、设计思路、模块划分、前后端业务如何解耦、如何进行需求适配
+% 建议配 UML 类图 / 架构图（放 figures/ 目录）
+
+\subsection{总体架构}
+
+% TODO: 插入架构图或 UML 类图
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{fig1_architecture.png}
+%     \caption{系统总体架构（MVP 分层与依赖方向）}
+%     \label{fig:arch}
+% \end{figure}
+
+系统采用 MVP 三层架构：视图层（View）负责界面渲染与事件采集，
+模型层（Model）承载数据结构与业务算法，
+演示器层（Presenter）居中协调。三者依赖关系为单向：
+View 与 Model 互不引用，仅与 Presenter 交互。
+
+\subsection{模块划分}
+
+% TODO: 按实际项目填写模块表
+\begin{table}[H]
+    \centering
+    \caption{系统模块划分}
+    \label{tab:modules}
+    \begin{tabular}{lll}
+        \toprule
+        模块 & 职责 & 关键类/接口 \\
+        \midrule
+        \texttt{contracts.py} & 接口契约（全项目"宪法"） & \texttt{IMainView}, \texttt{IImageService} \\
+        \texttt{core/}        & 业务算法与数据存取（Model） & \texttt{OpenCVService} \\
+        \texttt{view/}        & 界面渲染与事件转发（View） & \texttt{MainWindow} \\
+        \texttt{presenter/}   & 事件协调与流程控制 & \texttt{MainPresenter} \\
+        \texttt{main.py}      & 组装入口（依赖注入） & --- \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{前后端解耦与需求适配}\label{subsec:decouple}
+
+% TODO: 这是评分重点，讲清三点：
+% 1. 解耦机制：Presenter 依赖抽象接口（依赖倒置），View/Model 互不感知
+% 2. 事件流：View 只发事件、Presenter 调度 Model、结果经接口回调刷新 View
+% 3. 需求适配：替换前端/后端时只改 main.py 组装处，Presenter 与契约不动
+（解耦原理约 150 字 + 替换扩展示例约 100 字，
+例如：保持算法模块不变，将 PySide6 界面替换为命令行界面，实现 \texttt{IMainView} 即可接入。）
+
+% ---------------------------------------------------------------
+\section{系统开发}\label{sec:dev}
+% 建议篇幅：约 250~300 字
+% 内容：核心模块的实现、有没有计划但未完成的功能、遇到什么问题
+
+\subsection{核心模块实现}
+
+% TODO: 用文字描述（不贴代码），可穿插"小段关键代码"（课程允许小段）
+Presenter 在初始化时订阅 View 暴露的事件接口，收到事件后调用 Model 完成处理，
+再通过 View 接口刷新界面；View 实现与算法实现均面向契约编程。
+耗时算法放入子线程执行，避免界面阻塞。
+
+\subsection{遇到的问题与解决}
+
+% TODO: 列 1~2 个真实踩坑，例如：
+（例：界面线程与算法线程的数据竞争，通过信号槽队列连接解决；
+例：替换命令行前端时发现 View 内残留业务调用，重构为被动视图。）
+
+\subsection{计划但未完成的功能}
+
+% TODO: 如有则写（如实说明，不影响评分诚实性）
+（例：批量处理队列、云端同步等。）
+
+% ---------------------------------------------------------------
+\section{程序运行截图}\label{sec:screenshots}
+% 要求：展示核心功能实现的截图；截图放 figures/ 目录
+% TODO: 替换为实际截图
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{fig2_main_ui.png}
+%     \caption{主界面：图像加载与滤镜处理}
+%     \label{fig:ui}
+% \end{figure}
+%
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{fig3_cli_view.png}
+%     \caption{替换后的命令行前端（同一后端算法）}
+%     \label{fig:cli}
+% \end{figure}
+
+（截图 1：主界面核心功能；截图 2：替换前端或后端后的运行效果——
+第二张是"可替换性"的直接证据，建议务必包含。）
+
+% ---------------------------------------------------------------
+\section{总结与展望}\label{sec:conclusion}
+% 建议篇幅：约 150~200 字
+
+% TODO
+（总结：架构带来的实际收益，如并行开发、测试便利；
+评价：MVP 在本项目的适用性；展望：可继续扩展的方向；
+学习收获：对架构解耦、接口设计、工程化的理解。）
+
+% ---------------------------------------------------------------
+\section*{参考文献}
+% TODO: 列出查阅过的资料、开源程序、官方文档等，建议 4~6 条，GB/T 7714 风格
+\begin{enumerate}
+    \item Qt Company. Qt 6 Documentation[EB/OL]. https://doc.qt.io/qt-6/.
+    \item OpenCV Team. OpenCV Python Tutorials[EB/OL]. https://docs.opencv.org/.
+    \item （其余文献待补充）
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\section*{人员分工}
+% TODO: 按实际分工填写（要求：小组成员承担的工作）
+\begin{table}[H]
+    \centering
+    \caption{小组成员分工}
+    \label{tab:work}
+    \begin{tabular}{ll}
+        \toprule
+        成员 & 承担工作 \\
+        \midrule
+        陈子俊 & （待填写：如 Model 层实现、后端扩展、单元测试） \\
+        （待填写） & （待填写：如 View 层实现、前端扩展、报告与视频） \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------
+% 生成式大模型使用情况（课程要求：不计入总字数，需详细说明）
+% 注意：若报告正文有 AI 辅助撰写的段落，需高亮对应文字并用大括号标注提示词
+\section*{生成式大语言模型使用情况}
+
+% TODO: 按项目阶段如实填写：选题阶段 / 实施阶段 / 报告撰写阶段
+% 每阶段说明：使用了哪个模型、做什么、提示词是什么
+\begin{table}[H]
+    \centering
+    \caption{生成式大语言模型使用情况}
+    \label{tab:llm}
+    \begin{tabular}{llll}
+        \toprule
+        阶段 & 模型 & 用途 & 说明 \\
+        \midrule
+        选题阶段 & （待填写） & 选题调研与比较 & 提示词：（待填写） \\
+        实施阶段 & （待填写） & 代码辅助与调试 & 提示词：（待填写） \\
+        报告阶段 & （待填写） & 文字润色与排版 & 提示词：（待填写） \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+以下各项由小组成员独立完成，未使用 AI 生成：
+\begin{enumerate}
+    \item 核心业务代码：（待填写，如算法模块、界面模块中本人独立完成的部分）；
+    \item 系统架构设计：（待填写）；
+    \item 报告初稿：（待填写）。
+\end{enumerate}
+
+\end{document}
